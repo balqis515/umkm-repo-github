@@ -73,6 +73,14 @@
         .slider-slide.active {
             opacity: 1;
         }
+
+        #dropdown-menu {
+            display: none; /* Sembunyikan dropdown secara default */
+        }
+
+        #dropdown-menu.show {
+            display: block; /* Tampilkan dropdown ketika aktif */
+        }
     </style>
 </head>
 <body>
@@ -105,6 +113,18 @@
                         </svg>
                     </button>
                     <span id="cart-count" class="cart-badge hidden">0</span>
+                </div>
+                <div class="relative ml-4">
+                    <button id="menu-button" class="text-gray-700 hover:text-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                    <div id="dropdown-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden z-10">
+                        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profil</a>
+                        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Pengaturan</a>
+                        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Keluar</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -147,6 +167,7 @@
         </div>
     </nav>
 
+   
     <!-- Slider Promo -->
     <div class="slider-container bg-gray-100">
         <div class="slider-slide active">
