@@ -547,111 +547,117 @@
     </footer>
 
     <!-- Modal Cart -->
-    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
-        <div class="absolute right-0 top-0 h-full w-full md:w-1/2 lg:w-1/3 bg-white shadow-lg overflow-y-auto">
-            <div class="p-4">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold">Keranjang Belanja</h2>
-                    <button id="close-cart" class="text-gray-500 hover:text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-                
-                <div class="border-t border-b py-4 mb-4">
-                    <div class="flex justify-between mb-2">
-                        <span>Subtotal</span>
-                        <span>Rp 0</span>
-                    </div>
-                    <div class="flex justify-between mb-2">
-                        <span>Ongkos Kirim</span>
-                        <span>-</span>
-                    </div>
-                    <div class="flex justify-between font-bold">
-                        <span>Total</span>
-                        <span>Rp 0</span>
-                    </div>
-                </div>
-                
-                <a href="https://wa.me/+62895327002197?text=Halo,%20saya%20ingin%20melakukan%20pembayaran%20untuk%20pesanan%20di%20Bengkel%20Maju%20Jaya" class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg mb-4 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.479 5.093 1.479h.005c4.648 0 8.432-3.785 8.435-8.438.002-4.655-3.782-8.438-8.434-8.438-4.647 0-8.432 3.785-8.434 8.438 0 1.727.525 3.401 1.506 4.817l-1.204 4.397 4.636-1.246z"/>
-                    </svg>
-                    Bayar via WhatsApp
-                </a>
-                
-                <p class="text-center text-sm text-gray-500">
-                    Metode pembayaran: Transfer Bank, Gopay, OVO
-                </p>
-            </div>
+    <!-- Modal Cart -->
+<div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+  <div class="absolute right-0 top-0 h-full w-full md:w-1/2 lg:w-1/3 bg-white shadow-lg overflow-y-auto">
+    <div class="p-4">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold">Keranjang Belanja</h2>
+        <button id="close-cart" class="text-gray-500 hover:text-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div id="cart-items" class="mb-4 space-y-2"></div>
+
+      <div class="border-t border-b py-4 mb-4">
+        <div class="flex justify-between mb-2">
+          <span>Subtotal</span>
+          <span id="subtotal">Rp 0</span>
         </div>
+        <div class="flex justify-between mb-2">
+          <span>Ongkos Kirim</span>
+          <span>-</span>
+        </div>
+        <div class="flex justify-between font-bold">
+          <span>Total</span>
+          <span id="total">Rp 0</span>
+        </div>
+      </div>
+
+      <a id="whatsapp-link" target="_blank" href="#" class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg mb-4 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.479 5.093 1.479h.005c4.648 0 8.432-3.785 8.435-8.438.002-4.655-3.782-8.438-8.434-8.438-4.647 0-8.432 3.785-8.434 8.438 0 1.727.525 3.401 1.506 4.817l-1.204 4.397 4.636-1.246z"/>
+        </svg>
+        Bayar via WhatsApp
+      </a>
+
+      <p class="text-center text-sm text-gray-500">
+        Metode pembayaran: Transfer Bank, Gopay, OVO
+      </p>
     </div>
+  </div>
+</div>
 
-    <script>
-        // Slider functionality
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slider-slide');
-        
-        function showSlide(n) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            slides[n].classList.add('active');
-        }
-        
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-        }
-        
-        setInterval(nextSlide, 5000);
-        
-        // Cart functionality
-        const cartButton = document.getElementById('cart-button');
-        const cartModal = document.getElementById('cart-modal');
-        const closeCart = document.getElementById('close-cart');
-        const cartCount = document.getElementById('cart-count');
-        
-        cartButton.addEventListener('click', () => {
-            cartModal.classList.remove('hidden');
-        });
-        
-        closeCart.addEventListener('click', () => {
-            cartModal.classList.add('hidden');
-        });
-        
-        // Add to cart buttons
-        const addToCartButtons = document.querySelectorAll('.product-card button');
-        
-        // Store cart items
-        const cartItems = [];
+<script>
+  const cartButton = document.getElementById('cart-button');
+  const cartModal = document.getElementById('cart-modal');
+  const closeCart = document.getElementById('close-cart');
+  const cartCount = document.getElementById('cart-count');
+  const cartItemsContainer = document.getElementById('cart-items');
+  const subtotalElement = document.getElementById('subtotal');
+  const totalElement = document.getElementById('total');
+  const whatsappLink = document.getElementById('whatsapp-link');
 
-        addToCartButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const productCard = button.closest('.product-card');
-                const productName = productCard.querySelector('h3').textContent;
-                const productPrice = productCard.querySelector('.text-blue-700').textContent;
-                
-                cartItems.push({ name: productName, price: productPrice });
-                
-                let count = parseInt(cartCount.textContent);
-                count++;
-                cartCount.textContent = count;
-                cartCount.classList.remove('hidden');
-                
-                // Show notification
-                const notification = document.createElement('div');
-                notification.className = 'fixed top-20 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50 animate-bounce';
-                notification.textContent = 'Produk ditambahkan ke keranjang!';
-                document.body.appendChild(notification);
-                
-                setTimeout(() => {
-                    notification.classList.add('opacity-0', 'transition-opacity', 'duration-300');
-                    setTimeout(() => notification.remove(), 300);
-                }, 2000);
-            });
-        });
-    </script>
-    
+  let cartItems = [];
+
+  cartButton.addEventListener('click', () => {
+    cartModal.classList.remove('hidden');
+    renderCart();
+  });
+
+  closeCart.addEventListener('click', () => {
+    cartModal.classList.add('hidden');
+  });
+
+  const addToCartButtons = document.querySelectorAll('.product-card button');
+  addToCartButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const productCard = button.closest('.product-card');
+      const productName = productCard.querySelector('h3').textContent;
+      const productPriceText = productCard.querySelector('.text-blue-700').textContent.replace(/[^\d]/g, '');
+      const productPrice = parseInt(productPriceText);
+
+      cartItems.push({ name: productName, price: productPrice });
+      cartCount.textContent = cartItems.length;
+      cartCount.classList.remove('hidden');
+
+      const notification = document.createElement('div');
+      notification.className = 'fixed top-20 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50 animate-bounce';
+      notification.textContent = 'Produk ditambahkan ke keranjang!';
+      document.body.appendChild(notification);
+
+      setTimeout(() => {
+        notification.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+        setTimeout(() => notification.remove(), 300);
+      }, 2000);
+    });
+  });
+
+  function renderCart() {
+    cartItemsContainer.innerHTML = '';
+    let subtotal = 0;
+
+    cartItems.forEach(item => {
+      subtotal += item.price;
+      const itemEl = document.createElement('div');
+      itemEl.className = 'flex justify-between text-sm';
+      itemEl.innerHTML = `<span>${item.name}</span><span>Rp ${item.price.toLocaleString('id-ID')}</span>`;
+      cartItemsContainer.appendChild(itemEl);
+    });
+
+    subtotalElement.textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+    totalElement.textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+
+    const message = encodeURIComponent(`Halo, saya ingin memesan:
+${cartItems.map(item => `- ${item.name}: Rp ${item.price.toLocaleString('id-ID')}`).join('\n')}
+Total: Rp ${subtotal.toLocaleString('id-ID')}`);
+    const phoneNumber = '62895327002197'; // Ganti dengan nomor WhatsApp tujuan
+    whatsappLink.href = `https://wa.me/${phoneNumber}?text=${message}`;
+  }
+</script>
 </body>
 
 </html>
