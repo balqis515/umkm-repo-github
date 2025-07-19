@@ -102,19 +102,93 @@
     </div>
 
     <!-- Search Bar -->
-    <div class="relative w-full md:w-1/2">
-      <input
+   <!-- Search Bar -->
+<div class="relative w-full md:w-1/2">
+    <input
         type="text"
         id="searchInput"
         placeholder="Cari sparepart atau layanan..."
         class="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <button
+    />
+    <button
+        id="searchButton"
         class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white px-4 py-1 rounded-full hover:bg-blue-700"
-      >
+    >
         Cari
-      </button>
+    </button>
+    
+    <div id="searchResults" class="absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-y-auto z-50 hidden">
+        <!-- Hasil pencarian akan ditampilkan di sini -->
     </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        const searchResults = document.getElementById('searchResults');
+
+        // Contoh data sparepart dan layanan
+        const sampleData = [
+            { name: "Sparepart A", description: "Deskripsi sparepart A" },
+            { name: "Sparepart B", description: "Deskripsi sparepart B" },
+            { name: "Layanan C", description: "Deskripsi layanan C" },
+            { name: "Sparepart D", description: "Deskripsi sparepart D" },
+            { name: "Layanan E", description: "Deskripsi layanan E" }
+        ];
+
+        // Fungsi untuk melakukan pencarian
+        function performSearch() {
+            const query = searchInput.value.trim().toLowerCase();
+            searchResults.innerHTML = ''; // Kosongkan hasil sebelumnya
+
+            if (query === '') {
+                searchResults.classList.add('hidden');
+                return;
+            }
+
+            // Filter data berdasarkan query
+            const results = sampleData.filter(item => 
+                item.name.toLowerCase().includes(query) || 
+                item.description.toLowerCase().includes(query)
+            );
+
+            // Tampilkan hasil pencarian
+            if (results.length > 0) {
+                results.forEach(item => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'p-2 border-b border-gray-200 hover:bg-gray-100 cursor-pointer';
+                    resultItem.innerHTML = `
+                        <strong>${item.name}</strong><br>
+                        <span class="text-gray-600">${item.description}</span>
+                    `;
+                    searchResults.appendChild(resultItem);
+                });
+                searchResults.classList.remove('hidden');
+            } else {
+                searchResults.innerHTML = '<div class="p-2 text-gray-500">Tidak ditemukan hasil yang cocok.</div>';
+                searchResults.classList.remove('hidden');
+            }
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', performSearch);
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Menutup hasil pencarian saat mengklik di luar
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.relative')) {
+                searchResults.classList.add('hidden');
+            }
+        });
+    });
+</script>
+
 
     <!-- Icon Buttons -->
     <div class="flex items-center gap-4">
@@ -766,6 +840,75 @@ Total: Rp ${subtotal.toLocaleString('id-ID')}`);
     menuBtn.addEventListener('click', () => {
       dropdownMenu.classList.toggle('hidden');
     });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const searchButton = document.getElementById('searchButton');
+    const searchResults = document.getElementById('searchResults');
+
+    // Sample data representing your products
+    const sampleData = [
+        { name: "V belt Michelin Vario 150 LED", description: "Rp 126.550" },
+        { name: "Roller Original YSP Mio J/Soul GT", description: "Rp 22.500" },
+        { name: "Oli Shell AX7 Matic 10W-40 1L", description: "Rp 62.987" },
+        // Add other products
+        { name: "Karbu/Injektor Cleaner 500ml", description: "Rp 20.350" },
+        { name: "Kampas Rem Depan Mio/NMAX YSP", description: "Rp 14.450" },
+        // Continue with more products...
+    ];
+
+    // Search function
+    function performSearch() {
+        const query = searchInput.value.trim().toLowerCase();
+        searchResults.innerHTML = ''; // Clear previous results
+
+        if (query === '') {
+            searchResults.classList.add('hidden');
+            return;
+        }
+
+        // Filter data based on query
+        const results = sampleData.filter(item => 
+            item.name.toLowerCase().includes(query) || 
+            item.description.toLowerCase().includes(query)
+        );
+
+        // Show search results
+        if (results.length > 0) {
+            results.forEach(item => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'p-2 border-b border-gray-200 hover:bg-gray-100 cursor-pointer';
+                resultItem.innerHTML = `
+                    <strong>${item.name}</strong><br>
+                    <span class="text-gray-600">${item.description}</span>
+                `;
+                searchResults.appendChild(resultItem);
+            });
+            searchResults.classList.remove('hidden');
+        } else {
+            searchResults.innerHTML = '<div class="p-2 text-gray-500">Tidak ditemukan hasil yang cocok.</div>';
+            searchResults.classList.remove('hidden');
+        }
+    }
+
+    // Event listeners
+    searchInput.addEventListener('input', performSearch);
+    searchButton.addEventListener('click', performSearch);
+    searchInput.addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    });
+
+    // Close search results when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.relative')) {
+            searchResults.classList.add('hidden');
+        }
+    });
+});
+
   </script>
 
 
