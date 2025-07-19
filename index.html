@@ -813,6 +813,14 @@
     cartItemsContainer.innerHTML = '';
     let subtotal = 0;
 
+    if (cartItems.length === 0) {
+      cartItemsContainer.innerHTML = '<p class="text-center text-gray-500">Keranjang kosong</p>';
+      subtotalElement.textContent = 'Rp 0';
+      totalElement.textContent = 'Rp 0';
+      whatsappLink.href = '#';
+      return;
+    }
+
     cartItems.forEach(item => {
       subtotal += item.price;
       const itemEl = document.createElement('div');
@@ -824,19 +832,16 @@
     subtotalElement.textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
     totalElement.textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
 
-   const message = encodeURIComponent(`Halo, saya ingin memesan:
-${cartItems.map(item => `- ${item.name}: Rp ${item.price.toLocaleString('id-ID')}`).join('\n')}
-Total: Rp ${subtotal.toLocaleString('id-ID')}`);
+    const message = encodeURIComponent(`Halo, saya ingin memesan:\n${cartItems.map(item => `- ${item.name}: Rp ${item.price.toLocaleString('id-ID')}`).join('\n')}\nTotal: Rp ${subtotal.toLocaleString('id-ID')}`);
+    const phoneNumber = '6285156947451';
+    const isMobile = /iPhone|Android/i.test(navigator.userAgent);
 
-const phoneNumber = '6285156947451'; // Ganti dengan nomor WhatsApp tujuan
-
-const isMobile = /iPhone|Android/i.test(navigator.userAgent);
-whatsappLink.href = isMobile
-  ? `https://wa.me/${phoneNumber}?text=${message}`
-  : `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
-
+    whatsappLink.href = isMobile
+      ? `https://wa.me/${phoneNumber}?text=${message}`
+      : `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
   }
 </script>
+
 
  <!-- Script Toggle Dropdown -->
   <script>
