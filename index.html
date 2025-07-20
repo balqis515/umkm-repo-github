@@ -102,92 +102,310 @@
     </div>
 
     <!-- Search Bar -->
-   <!-- Search Bar -->
-<div class="relative w-full md:w-1/2">
+  <!-- Search Bar -->
+<div class="container mx-auto py-8 px-4">
+  <div class="relative max-w-2xl mx-auto">
     <input
-        type="text"
-        id="searchInput"
-        placeholder="Cari sparepart atau layanan..."
-        class="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+      type="text"
+      id="searchInput"
+      placeholder="Cari sparepart (contoh: Oli, Kampas Rem, V Belt...)"
+      class="w-full px-6 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
     />
-    <button
-        id="searchButton"
-        class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white px-4 py-1 rounded-full hover:bg-blue-700"
-    >
-        Cari
+    <button id="clearSearch" class="absolute right-20 top-4 text-gray-400 hover:text-gray-600 hidden">
+      ✕
     </button>
-    
-    <div id="searchResults" class="absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-y-auto z-50 hidden">
-        <!-- Hasil pencarian akan ditampilkan di sini -->
-    </div>
+    <button
+      id="searchButton"
+      class="absolute right-2 top-2 bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition"
+    >
+      Cari
+    </button>
+    <div id="searchResults"
+         class="absolute left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-xl max-h-[70vh] overflow-y-auto z-50 hidden"></div>
+  </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('searchInput');
-        const searchButton = document.getElementById('searchButton');
-        const searchResults = document.getElementById('searchResults');
+<!-- Hasil Pencarian -->
+<div id="resultsContainer" class="container mx-auto px-4 py-8 hidden">
+  <h2 class="text-2xl font-bold mb-6 text-gray-800">Hasil Pencarian</h2>
+  <div id="filteredProducts"
+       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+</div>
 
-        // Contoh data sparepart dan layanan
-        const sampleData = [
-            { name: "Sparepart A", description: "Deskripsi sparepart A" },
-            { name: "Sparepart B", description: "Deskripsi sparepart B" },
-            { name: "Layanan C", description: "Deskripsi layanan C" },
-            { name: "Sparepart D", description: "Deskripsi sparepart D" },
-            { name: "Layanan E", description: "Deskripsi layanan E" }
-        ];
 
-        // Fungsi untuk melakukan pencarian
-        function performSearch() {
-            const query = searchInput.value.trim().toLowerCase();
-            searchResults.innerHTML = ''; // Kosongkan hasil sebelumnya
+    <!-- Tombol Back to Top -->
+    <button id="backToTop" class="fixed bottom-6 right-6 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition hidden">
+        ↑
+    </button>
 
-            if (query === '') {
-                searchResults.classList.add('hidden');
-                return;
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ✅ Data Produk Sparepart
+            const produkData = [
+                {
+                    name: "V belt Michelin Vario 150 LED",
+                    category: "belt",
+                    description: "V belt original untuk motor matic",
+                    image: "IMG/vanbelt.jpeg",
+                    price: "Rp 126.550",
+                    rating: 5,
+                    reviews: 125
+                },
+                {
+                    name: "Roller YSP Mio J",
+                    category: "roller",
+                    description: "Roller original untuk Yamaha Mio J",
+                    image: "IMG/roller.jpeg",
+                    price: "Rp 22.500",
+                    rating: 4,
+                    reviews: 98
+                },
+                {
+                    name: "Oli Shell AX7 Matic 10W-40",
+                    category: "oli",
+                    description: "Oli mesin full synthetic untuk matic",
+                    image: "IMG/oli_shell.jpeg",
+                    price: "Rp 62.987",
+                    rating: 5,
+                    reviews: 75
+                },
+                {
+                    name: "Karbu Cleaner 500ml",
+                    category: "cleaner",
+                    description: "Pembersih karburator dan injektor",
+                    image: "IMG/karbu_cleaner.jpeg",
+                    price: "Rp 20.350",
+                    rating: 5,
+                    reviews: 210
+                },
+                {
+                    name: "Kampas Rem Depan Mio",
+                    category: "kampas",
+                    description: "Kampas rem depan untuk Yamaha Mio",
+                    image: "IMG/kampas_rem_mio.jpeg",
+                    price: "Rp 14.550",
+                    rating: 5,
+                    reviews: 125
+                },
+                {
+                    name: "Oli Motul Motor Oil LE 10W-30",
+                    category: "oli",
+                    description: "Oli mesin motor berkualitas tinggi",
+                    image: "IMG/oli_motul.jpeg",
+                    price: "Rp 59.550",
+                    rating: 5,
+                    reviews: 125
+                },
+                {
+                    name: "Seal Kruk As Beat ESP",
+                    category: "seal",
+                    description: "Seal kruk as untuk Honda Beat ESP",
+                    image: "IMG/seal_kruk.jpeg",
+                    price: "Rp 9.350",
+                    rating: 5,
+                    reviews: 125
+                },
+                {
+                    name: "Seal As Pully NMAX",
+                    category: "seal",
+                    description: "Seal as pully untuk Yamaha NMAX",
+                    image: "IMG/seal_as_pully.jpeg",
+                    price: "Rp 9.547",
+                    rating: 5,
+                    reviews: 125
+                },
+                {
+                    name: "Oli Enduro Matic S 10W-30",
+                    category: "oli",
+                    description: "Oli enduro untuk motor matic",
+                    image: "IMG/oli_enduro.jpeg",
+                    price: "Rp 37.690",
+                    rating: 5,
+                    reviews: 125
+                },
+                {
+                    name: "Oli MPX 2 10W-30",
+                    category: "oli",
+                    description: "Oli matic untuk motor Honda",
+                    image: "IMG/oli_mpx.jpeg",
+                    price: "Rp 49.538",
+                    rating: 5,
+                    reviews: 125
+                }
+            ];
+
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            const searchResults = document.getElementById('searchResults');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const filteredProducts = document.getElementById('filteredProducts');
+            const backToTop = document.getElementById('backToTop');
+            const clearSearch = document.getElementById('clearSearch');
+
+            // Format rating bintang
+            function renderRating(rating) {
+                let stars = '';
+                for (let i = 1; i <= 5; i++) {
+                    stars += i <= rating ? '★' : '☆';
+                }
+                return `<span class="text-yellow-400">${stars}</span>`;
             }
-
-            // Filter data berdasarkan query
-            const results = sampleData.filter(item => 
-                item.name.toLowerCase().includes(query) || 
-                item.description.toLowerCase().includes(query)
-            );
 
             // Tampilkan hasil pencarian
-            if (results.length > 0) {
-                results.forEach(item => {
-                    const resultItem = document.createElement('div');
-                    resultItem.className = 'p-2 border-b border-gray-200 hover:bg-gray-100 cursor-pointer';
-                    resultItem.innerHTML = `
-                        <strong>${item.name}</strong><br>
-                        <span class="text-gray-600">${item.description}</span>
+            function showSearchResults(query) {
+                const normalizedQuery = query.toLowerCase().trim();
+                
+                if (!normalizedQuery) {
+                    searchResults.classList.add('hidden');
+                    resultsContainer.classList.add('hidden');
+                    return;
+                }
+
+                const results = produkData.filter(item => 
+                    item.name.toLowerCase().includes(normalizedQuery) ||
+                    item.description.toLowerCase().includes(normalizedQuery) ||
+                    item.category.toLowerCase().includes(normalizedQuery)
+                );
+
+                searchResults.innerHTML = '';
+                
+                if (results.length > 0) {
+                    results.slice(0, 5).forEach(item => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'p-4 border-b border-gray-100 hover:bg-blue-50 cursor-pointer flex gap-3 items-center';
+                        resultItem.innerHTML = `
+                            <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-contain rounded-md">
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-medium truncate">${item.name}</h4>
+                                <p class="text-sm text-gray-600 truncate">${item.description}</p>
+                                <div class="flex justify-between items-center mt-1">
+                                    <span class="text-blue-600 font-medium">${item.price}</span>
+                                    ${renderRating(item.rating)}
+                                </div>
+                            </div>
+                        `;
+                        resultItem.addEventListener('click', () => {
+                            searchInput.value = item.name;
+                            performSearch();
+                        });
+                        searchResults.appendChild(resultItem);
+                    });
+
+                    if (results.length > 5) {
+                        const moreResults = document.createElement('div');
+                        moreResults.className = 'p-3 text-center text-blue-600 font-medium bg-gray-50 rounded-b-xl';
+                        moreResults.textContent = `+${results.length - 5} produk lainnya...`;
+                        searchResults.appendChild(moreResults);
+                    }
+
+                    searchResults.classList.remove('hidden');
+                } else {
+                    searchResults.innerHTML = `
+                        <div class="p-4 text-center text-gray-500">
+                            Produk tidak ditemukan. Coba kata kunci lain.
+                        </div>
                     `;
-                    searchResults.appendChild(resultItem);
-                });
-                searchResults.classList.remove('hidden');
-            } else {
-                searchResults.innerHTML = '<div class="p-2 text-gray-500">Tidak ditemukan hasil yang cocok.</div>';
-                searchResults.classList.remove('hidden');
+                    searchResults.classList.remove('hidden');
+                }
             }
-        }
 
-        // Event listeners
-        searchInput.addEventListener('input', performSearch);
-        searchButton.addEventListener('click', performSearch);
-        searchInput.addEventListener('keyup', function(e) {
-            if (e.key === 'Enter') {
-                performSearch();
+            // Tampilkan produk yang difilter
+            function showFilteredProducts(query) {
+                const normalizedQuery = query.toLowerCase().trim();
+                
+                if (!normalizedQuery) {
+                    resultsContainer.classList.add('hidden');
+                    return;
+                }
+
+                const results = produkData.filter(item => 
+                    item.name.toLowerCase().includes(normalizedQuery) ||
+                    item.description.toLowerCase().includes(normalizedQuery) ||
+                    item.category.toLowerCase().includes(normalizedQuery)
+                );
+
+                filteredProducts.innerHTML = '';
+
+                if (results.length > 0) {
+                    results.forEach(item => {
+                        const productCard = document.createElement('div');
+                        productCard.className = 'product-card bg-white rounded-lg shadow-md p-4 flex flex-col';
+                        productCard.innerHTML = `
+                            <div class="relative overflow-hidden rounded-lg mb-3 h-40 bg-gray-100">
+                                <img src="${item.image}" alt="${item.name}" class="w-full h-full object-contain p-2">
+                            </div>
+                            <h3 class="font-semibold text-lg mb-1 truncate">${item.name}</h3>
+                            <p class="text-gray-600 text-sm mb-2 line-clamp-2">${item.description}</p>
+                            <div class="flex items-center mb-2">
+                                ${renderRating(item.rating)}
+                                <span class="text-gray-500 text-sm ml-2">(${item.reviews})</span>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="text-lg font-bold text-blue-700 mb-3">${item.price}</div>
+                                <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                                    Tambah ke Keranjang
+                                </button>
+                            </div>
+                        `;
+                        filteredProducts.appendChild(productCard);
+                    });
+
+                    resultsContainer.classList.remove('hidden');
+                    window.scrollTo({
+                        top: resultsContainer.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    resultsContainer.classList.add('hidden');
+                }
             }
-        });
 
-        // Menutup hasil pencarian saat mengklik di luar
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.relative')) {
+            // Fungsi pencarian utama
+            function performSearch() {
+                const query = searchInput.value.trim();
+                showSearchResults(query);
+                showFilteredProducts(query);
+                clearSearch.style.display = query ? 'block' : 'none';
+                resultsContainer.classList.toggle('hidden', !query);
+            }
+
+            // Event listeners
+            searchInput.addEventListener('input', () => {
+                showSearchResults(searchInput.value);
+                clearSearch.style.display = searchInput.value.trim() ? 'block' : 'none';
+            });
+
+            searchButton.addEventListener('click', performSearch);
+
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+
+            clearSearch.addEventListener('click', () => {
+                searchInput.value = '';
+                searchInput.focus();
+                clearSearch.style.display = 'none';
                 searchResults.classList.add('hidden');
-            }
+                resultsContainer.classList.add('hidden');
+            });
+
+            window.addEventListener('scroll', () => {
+                backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+            });
+
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('#searchInput') && !e.target.closest('#searchResults')) {
+                    searchResults.classList.add('hidden');
+                }
+            });
         });
-    });
-</script>
+    </script>
 
 
     <!-- Icon Buttons -->
@@ -258,7 +476,7 @@
     <div class="relative overflow-hidden slider-container w-full h-[300px] md:h-[400px] bg-black">
   <div id="slider" class="flex w-full h-full">
     <div class="slider-slide active">
-      <img src="IMG/seal kruk.jpeg" alt="Promo" class="w-full h-full object-cover" />
+      <img src="IMG/mtr.jpg" alt="Promo" class="w-full h-full object-cover" />
     </div>
     <div class="slider-slide inactive">
       <img src="IMG/vanbelt.jpeg" alt="Diskon" class="w-full h-full object-cover" />
@@ -410,7 +628,7 @@
     <!-- Produk 3 -->
     <div class="bg-white rounded-lg shadow product-card p-4">
       <div class="relative overflow-hidden rounded-lg mb-4 h-48">
-        <img src="IMG/oli shell.jpeg" alt="Oli Shell AX7" class="w-full h-full object-cover">
+        <img src="IMG/oli_shell.jpeg" alt="Oli Shell AX7" class="w-full h-full object-cover">
       </div>
       <h3 class="font-semibold text-lg mb-1">Oli Shell AX7 Matic 10W-40 1L</h3>
       <div class="flex items-center mb-2">
@@ -424,7 +642,7 @@
     <!-- Produk 4 -->
     <div class="bg-white rounded-lg shadow product-card p-4">
       <div class="relative overflow-hidden rounded-lg mb-4 h-48">
-        <img src="IMG/karbu cleaner.jpeg" alt="Karbu Cleaner" class="w-full h-full object-cover">
+        <img src="IMG/karbu_cleaner.jpeg" alt="Karbu Cleaner" class="w-full h-full object-cover">
       </div>
       <h3 class="font-semibold text-lg mb-1">Karbu/Injektor Cleaner 500ml</h3>
       <div class="flex items-center mb-2">
@@ -438,7 +656,7 @@
     <!-- Produk 5 -->
     <div class="bg-white rounded-lg shadow product-card p-4">
       <div class="relative overflow-hidden rounded-lg mb-4 h-48">
-        <img src="IMG/kampas rem mio.jpeg" alt="Kampas Rem Mio" class="w-full h-full object-cover">
+        <img src="IMG/kampas_rem_mio.jpeg" alt="Kampas Rem Mio" class="w-full h-full object-cover">
       </div>
       <h3 class="font-semibold text-lg mb-1">Kampas Rem Depan Mio/NMAX YSP</h3>
       <div class="flex items-center mb-2">
@@ -452,7 +670,7 @@
     <!-- Produk 6 -->
     <div class="bg-white rounded-lg shadow product-card p-4">
       <div class="relative overflow-hidden rounded-lg mb-4 h-48">
-        <img src="IMG/oli motul.jpeg" alt="Oli Motul 10W-30" class="w-full h-full object-cover">
+        <img src="IMG/oli_motul.jpeg" alt="Oli Motul 10W-30" class="w-full h-full object-cover">
       </div>
       <h3 class="font-semibold text-lg mb-1">Oli Motul Motor Oil LE 10W-30</h3>
       <div class="flex items-center mb-2">
@@ -466,7 +684,7 @@
     <!-- Produk 7 -->
     <div class="bg-white rounded-lg shadow product-card p-4">
       <div class="relative overflow-hidden rounded-lg mb-4 h-48">
-        <img src="IMG/seal kruk.jpeg" alt="Seal kruk as" class="w-full h-full object-cover">
+        <img src="IMG/seal_kruk.jpeg" alt="Seal kruk as" class="w-full h-full object-cover">
       </div>
       <h3 class="font-semibold text-lg mb-1">Seal kruk as beat esp, scoopy esp, vario 110esp</h3>
       <div class="flex items-center mb-2">
@@ -480,7 +698,7 @@
     <!-- Produk 8 -->
     <div class="bg-white rounded-lg shadow product-card p-4">
       <div class="relative overflow-hidden rounded-lg mb-4 h-48">
-        <img src="IMG/SEAL AS PULLY.jpeg" alt="Seal as pully" class="w-full h-full object-cover">
+        <img src="IMG/SEAL_AS_PULLY.jpeg" alt="Seal as pully" class="w-full h-full object-cover">
       </div>
       <h3 class="font-semibold text-lg mb-1">Seal As Pully Belakang NMAX, Aerox, Lexi</h3>
       <div class="flex items-center mb-2">
@@ -494,7 +712,7 @@
     <!-- Produk 9 -->
     <div class="bg-white rounded-lg shadow product-card p-4">
       <div class="relative overflow-hidden rounded-lg mb-4 h-48">
-        <img src="IMG/oli enduro.jpeg" alt="Oli Enduro" class="w-full h-full object-cover">
+        <img src="IMG/oli_enduro.jpeg" alt="Oli Enduro" class="w-full h-full object-cover">
       </div>
       <h3 class="font-semibold text-lg mb-1">Oli Enduro Matic S 10W-30 (Original)</h3>
       <div class="flex items-center mb-2">
@@ -508,7 +726,7 @@
     <!-- Produk 10 -->
     <div class="bg-white rounded-lg shadow product-card p-4">
       <div class="relative overflow-hidden rounded-lg mb-4 h-48">
-        <img src="IMG/oli mpx.jpeg" alt="Oli MPX" class="w-full h-full object-cover">
+        <img src="IMG/oli_mpx.jpeg" alt="Oli MPX" class="w-full h-full object-cover">
       </div>
       <h3 class="font-semibold text-lg mb-1">Oli MPX 2 10W-30 0,8L Matic</h3>
       <div class="flex items-center mb-2">
@@ -909,6 +1127,7 @@
 });
 
   </script>
+
 
 
 
