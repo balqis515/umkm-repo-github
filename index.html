@@ -87,7 +87,7 @@
     <!-- Running Text -->
     <div class="running-text">
         <div class="marquee">
-            🚗 PROMO SEPESIAL! Diskon 10% untuk 20 pelanggan pertama bukan ini. Hubungi kami segera! 🚗
+            🚗 PROMO SEPESIAL! Diskon 10% untuk 20 pelanggan pertama bulan ini. Hubungi kami segera! 🚗
         </div>
     </div>
 
@@ -108,7 +108,7 @@
     <input
       type="text"
       id="searchInput"
-      placeholder="Cari sparepart (contoh: Oli, Kampas Rem, V Belt...)"
+      placeholder="Cari sparepart (contoh: Oli, Kampas Rem, V Belt, Seal As Pully Belakang NMAX, Aerox, Lexi, Seal kruk as beat esp, scoopy esp, vario 110esp, SHELL AX5 MATIC 0.8L vario, beat, scoopy, mio, fino, nuovo, ORIGINAL, Busi Rxz, Rgr, Ninja 2 tak, Busi daytona 3562 BP8ES...)"
       class="w-full px-6 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
     />
     <button id="clearSearch" class="absolute right-20 top-4 text-gray-400 hover:text-gray-600 hidden">
@@ -231,7 +231,26 @@
                     price: "Rp 49.538",
                     rating: 5,
                     reviews: 125
-                }
+                },
+                 {
+                    name: "SHELL AX5 MATIC 0.8L vario, beat, scoopy, mio, fino, nuovo, ORIGINAL",
+                    category: "oli",
+                    description: "Oli matic untuk motor matic",
+                    image: "IMG/shell_ax5.jpeg",
+                    price: "Rp 22.500",
+                    rating: 5,
+                    reviews: 125
+                },
+                {
+                    name: "Busi Rxz, Rgr",
+                    category: "Busi",
+                    description: "Busi untuk Ninja 2 tak, Busi daytona 3562 BP8ES",
+                    image: "IMG/busi_rxz.jpeg",
+                    price: "Rp 22.500",
+                    rating: 5,
+                    reviews: 125
+                },
+                
             ];
 
             const searchInput = document.getElementById('searchInput');
@@ -329,23 +348,21 @@
                 if (results.length > 0) {
                     results.forEach(item => {
                         const productCard = document.createElement('div');
-                        productCard.className = 'product-card bg-white rounded-lg shadow-md p-4 flex flex-col';
+                        productCard.className = 'bg-white rounded-xl shadow-md p-4 flex flex-col w-40 sm:w-48 md:w-52 transition hover:shadow-lg';
                         productCard.innerHTML = `
-                            <div class="relative overflow-hidden rounded-lg mb-3 h-40 bg-gray-100">
-                                <img src="${item.image}" alt="${item.name}" class="w-full h-full object-contain p-2">
+                            <div class="relative mb-3 h-36 flex items-center justify-center bg-white">
+                          <img src="${item.image}" alt="${item.name}" class="max-h-32 object-contain">
                             </div>
-                            <h3 class="font-semibold text-lg mb-1 truncate">${item.name}</h3>
-                            <p class="text-gray-600 text-sm mb-2 line-clamp-2">${item.description}</p>
+
+                    <h3 class="font-semibold text-sm mb-1 truncate">${item.name}</h3>
+                    <p class="text-gray-600 text-xs mb-2 truncate-two-lines">${item.description}</p>
+
                             <div class="flex items-center mb-2">
                                 ${renderRating(item.rating)}
                                 <span class="text-gray-500 text-sm ml-2">(${item.reviews})</span>
                             </div>
-                            <div class="mt-auto">
-                                <div class="text-lg font-bold text-blue-700 mb-3">${item.price}</div>
-                                <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
-                                    Tambah ke Keranjang
-                                </button>
-                            </div>
+                          <
+                            
                         `;
                         filteredProducts.appendChild(productCard);
                     });
@@ -766,7 +783,7 @@
 
     <!-- Produk 2 -->
    <div class="promo-product product-card bg-white rounded-lg shadow-lg p-4">
-  <img src="IMG/shell ax5.jpeg" alt="Promo Seal Kruk" class="w-full h-40 object-cover rounded-md mb-2" />
+  <img src="IMG/shell_ax5.jpeg" alt="Promo Seal Kruk" class="w-full h-40 object-cover rounded-md mb-2" />
   <h3 class="text-lg font-semibold">SHELL AX5 MATIC 0.8L vario, beat, scoopy, mio, fino, nuovo, ORIGINAL</h3>
   <p class="text-blue-700 font-bold">Rp 22.500</p>
   <button class="mt-2 bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-4 rounded">Tambah ke Keranjang</button>
@@ -774,7 +791,7 @@
 
     <!-- Produk 3 -->
    <div class="promo-product product-card bg-white rounded-lg shadow-lg p-4">
-  <img src="IMG/busi rxz.jpeg" alt="Promo Seal Kruk" class="w-full h-40 object-cover rounded-md mb-2" />
+  <img src="IMG/busi_rxz.jpeg" alt="Promo Seal Kruk" class="w-full h-40 object-cover rounded-md mb-2" />
   <h3 class="text-lg font-semibold">Busi Rxz, Rgr, Ninja 2 tak, Busi daytona 3562 BP8ES</h3>
   <p class="text-blue-700 font-bold">Rp 37.690</p>
   <button class="mt-2 bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-4 rounded">Tambah ke Keranjang</button>
@@ -1125,6 +1142,8 @@
         }
     });
 });
+
+
 
   </script>
 
